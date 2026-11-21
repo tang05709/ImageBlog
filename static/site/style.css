@@ -1,0 +1,111 @@
+:root {
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --text: #1f2430;
+  --muted: #6b7280;
+  --primary: #4f6df5;
+  --primary-dark: #3c56d8;
+  --danger: #dc3545;
+  --border: #e5e7eb;
+  --price: #d93025;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+.site-header {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 10;
+}
+.header-inner { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.logo { font-size: 20px; font-weight: 700; text-decoration: none; color: var(--text); }
+.site-header nav a { margin-left: 18px; color: var(--muted); text-decoration: none; }
+.site-header nav a:hover { color: var(--primary); }
+
+.site-footer { padding: 24px 0; text-align: center; color: var(--muted); font-size: 13px; }
+
+.hero { text-align: center; padding: 36px 0 16px; }
+.hero h1 { margin: 0 0 8px; font-size: 28px; }
+.hero p { color: var(--muted); margin: 0; }
+
+h2 { font-size: 20px; margin: 24px 0 12px; }
+
+.cat-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+.chip {
+  display: inline-block; padding: 5px 14px; border-radius: 999px;
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--text); text-decoration: none; font-size: 14px;
+}
+.chip:hover { border-color: var(--primary); color: var(--primary); }
+.chip.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+.grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px; margin: 12px 0 32px;
+}
+.card {
+  background: var(--card); border-radius: 12px; overflow: hidden;
+  text-decoration: none; color: var(--text);
+  border: 1px solid var(--border); transition: transform .15s, box-shadow .15s;
+}
+.card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+.card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; }
+.card-body { padding: 10px 14px 12px; }
+.card-title { font-weight: 600; margin-bottom: 4px; }
+.card-meta { display: flex; justify-content: space-between; color: var(--muted); font-size: 13px; }
+.price { color: var(--price); font-weight: 600; }
+.price.big { font-size: 30px; }
+
+.empty { color: var(--muted); padding: 24px 0; }
+.pager { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+.page-num { color: var(--muted); font-size: 14px; }
+
+/* 详情页 */
+.detail { display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; margin: 24px 0 40px; }
+.detail-img img { width: 100%; border-radius: 12px; border: 1px solid var(--border); }
+.detail-side h1 { font-size: 24px; margin-top: 0; }
+.meta-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 10px; overflow: hidden; }
+.meta-table th, .meta-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: left; }
+.meta-table th { width: 90px; color: var(--muted); font-weight: 500; background: #fafbfc; }
+.desc { color: var(--muted); }
+
+.prompt-box { margin-top: 16px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+.prompt-box h3 { margin: 0 0 10px; }
+.prompt { white-space: pre-wrap; word-break: break-all; background: #f2f4f8; padding: 12px; border-radius: 8px; font-size: 13px; margin: 0; }
+.locked p { color: var(--muted); }
+
+/* 支付页 */
+.pay-page { display: flex; justify-content: center; padding: 40px 0; }
+.pay-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 28px 32px; text-align: center; min-width: 360px; max-width: 480px;
+}
+.qr { display: flex; justify-content: center; margin: 16px 0; }
+.qr svg { border: 1px solid var(--border); border-radius: 8px; }
+.muted { color: var(--muted); font-size: 14px; }
+
+/* 按钮 */
+.btn {
+  display: inline-block; padding: 9px 20px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--card); color: var(--text); text-decoration: none; cursor: pointer; font-size: 14px;
+}
+.btn:hover { border-color: var(--primary); color: var(--primary); }
+.btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); color: #fff; }
+.btn-danger { color: var(--danger); }
+.btn-danger:hover { border-color: var(--danger); color: var(--danger); }
+.btn-sm { padding: 4px 12px; font-size: 13px; }
+
+@media (max-width: 760px) {
+  .detail { grid-template-columns: 1fr; }
+}

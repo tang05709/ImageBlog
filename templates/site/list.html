@@ -1,0 +1,36 @@
+{% extends "site/base.html" %}
+{% block title %}图片列表 - AI 图片画廊{% endblock %}
+{% block content %}
+<h1>图片列表</h1>
+
+<div class="cat-nav">
+  <a class="chip {% if current_cat == 0 %}active{% endif %}" href="/images">全部</a>
+  {% for c in categories %}
+  <a class="chip {% if current_cat == c.id %}active{% endif %}" href="/images?category={{ c.id }}">{{ c.name }}</a>
+  {% endfor %}
+</div>
+
+{% if cards.len() == 0 %}
+<p class="empty">暂无图片</p>
+{% endif %}
+<div class="grid">
+  {% for card in cards %}
+  <a class="card" href="/images/{{ card.id }}">
+    <img src="/{{ card.file_path }}" alt="{{ card.title }}" loading="lazy">
+    <div class="card-body">
+      <div class="card-title">{{ card.title }}</div>
+      <div class="card-meta">
+        <span>{{ card.category_name }}</span>
+        <span class="price">{{ card.price_text }}</span>
+      </div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+
+<div class="pager">
+  {% if has_prev %}<a class="chip" href="{{ prev_url }}">上一页</a>{% endif %}
+  <span class="page-num">第 {{ page }} 页</span>
+  {% if has_next %}<a class="chip" href="{{ next_url }}">下一页</a>{% endif %}
+</div>
+{% endblock %}

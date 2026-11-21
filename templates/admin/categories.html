@@ -1,0 +1,46 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}分类管理 - 管理后台{% endblock %}
+{% block content %}
+<h1>分类管理</h1>
+
+<div class="panel">
+  <h2>新增分类</h2>
+  <form method="post" action="/admin/categories" class="inline-form">
+    <input type="text" name="name" placeholder="分类名称" required>
+    <input type="number" name="sort" value="0" style="width:90px" title="排序">
+    <button class="btn btn-primary" type="submit">添加</button>
+  </form>
+</div>
+
+<div class="panel">
+  <table class="table">
+    <thead>
+      <tr><th>ID</th><th>名称</th><th>排序</th><th>图片数</th><th>操作</th></tr>
+    </thead>
+    <tbody>
+      {% for c in categories %}
+      <tr>
+        <td>{{ c.id }}</td>
+        <td>
+          <form method="post" action="/admin/categories/{{ c.id }}" class="inline-form">
+            <input type="text" name="name" value="{{ c.name }}" required>
+            <input type="number" name="sort" value="{{ c.sort }}" style="width:90px">
+            <button class="btn btn-sm" type="submit">保存</button>
+          </form>
+        </td>
+        <td>{{ c.sort }}</td>
+        <td>{{ c.image_count }}</td>
+        <td>
+          <form method="post" action="/admin/categories/{{ c.id }}/delete" onsubmit="return confirm('删除分类后其下图片将变为未分类，确定？')">
+            <button class="btn btn-sm btn-danger" type="submit">删除</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+      {% if categories.len() == 0 %}
+      <tr><td colspan="5" class="empty">暂无分类</td></tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "site/base.html" %}
+{% block title %}{{ img.title }} - AI 图片画廊{% endblock %}
+{% block content %}
+<div class="detail">
+  <div class="detail-img">
+    <img src="/{{ img.file_path }}" alt="{{ img.title }}">
+  </div>
+  <div class="detail-side">
+    <h1>{{ img.title }}</h1>
+    <table class="meta-table">
+      <tr><th>分类</th><td>{{ img.category_name }}</td></tr>
+      <tr><th>AI 模型</th><td>{{ img.model_name }}</td></tr>
+      <tr><th>图片尺寸</th><td>{{ img.width }} × {{ img.height }}</td></tr>
+      <tr><th>价格</th><td class="price">{{ img.price_text }}</td></tr>
+    </table>
+    {% if img.description.len() > 0 %}
+    <p class="desc">{{ img.description }}</p>
+    {% endif %}
+
+    <div class="prompt-box">
+      <h3>ComfyUI 提示词</h3>
+      {% if unlocked %}
+      <pre class="prompt">{{ img.prompt }}</pre>
+      {% else %}
+      <div class="locked">
+        <p>🔒 提示词已加密，支付后即可查看完整提示词（含正向/负向 prompt 与参数）。</p>
+        {% if img.price_cents > 0 %}
+        <form method="post" action="/orders">
+          <input type="hidden" name="image_id" value="{{ img.id }}">
+          <button class="btn btn-primary" type="submit">微信支付 {{ img.price_text }} 解锁</button>
+        </form>
+        {% else %}
+        <p>本图免费，提示词见上方。</p>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

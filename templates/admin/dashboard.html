@@ -1,0 +1,13 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}概览 - 管理后台{% endblock %}
+{% block content %}
+<h1>概览</h1>
+<div class="stats">
+  <div class="stat"><div class="stat-num">{{ image_count }}</div><div class="stat-label">图片总数</div></div>
+  <div class="stat"><div class="stat-num">{{ published_count }}</div><div class="stat-label">已上架</div></div>
+  <div class="stat"><div class="stat-num">{{ category_count }}</div><div class="stat-label">分类数</div></div>
+  <div class="stat"><div class="stat-num">{{ order_count }}</div><div class="stat-label">订单总数</div></div>
+  <div class="stat"><div class="stat-num">{{ paid_count }}</div><div class="stat-label">已支付订单</div></div>
+  <div class="stat"><div class="stat-num">{{ revenue_text }}</div><div class="stat-label">累计收入</div></div>
+</div>
+{% endblock %}

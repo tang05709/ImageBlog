@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}AI 图片画廊{% endblock %}</title>
+  <link rel="stylesheet" href="/static/site/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">🎨 AI 图片画廊</a>
+      <nav>
+        <a href="/">首页</a>
+        <a href="/images">图片列表</a>
+        <a href="/admin">后台管理</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <div class="container">Powered by Rust + Axum + Askama · ComfyUI AI 图片</div>
+  </footer>
+</body>
+</html>

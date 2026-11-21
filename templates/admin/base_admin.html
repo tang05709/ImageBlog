@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}管理后台{% endblock %}</title>
+  <link rel="stylesheet" href="/static/site/style.css">
+  <link rel="stylesheet" href="/static/admin/admin.css">
+</head>
+<body class="admin-body">
+  <aside class="sidebar">
+    <div class="side-logo">🎛 管理后台</div>
+    <nav>
+      <a href="/admin">📊 概览</a>
+      <a href="/admin/images">🖼 图片管理</a>
+      <a href="/admin/images/new">⬆ 上传图片</a>
+      <a href="/admin/categories">📁 分类管理</a>
+      <a href="/admin/orders">🧾 订单管理</a>
+      <a href="/" target="_blank">🌐 前台首页</a>
+    </nav>
+    <form method="post" action="/admin/logout" class="side-logout">
+      <button class="btn btn-light" type="submit">退出登录</button>
+    </form>
+  </aside>
+  <main class="admin-main">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

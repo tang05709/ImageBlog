@@ -1,0 +1,50 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}上传图片 - 管理后台{% endblock %}
+{% block content %}
+<h1>{% if form.is_new %}上传图片{% else %}编辑图片 #{{ form.id }}{% endif %}</h1>
+
+<div class="panel">
+  <form method="post" enctype="multipart/form-data"
+        action="{% if form.is_new %}/admin/images/new{% else %}/admin/images/{{ form.id }}/edit{% endif %}"
+        class="image-form">
+    {% if !form.is_new %}
+    <p><img class="preview" src="/{{ form.file_path }}" alt=""></p>
+    <p class="muted">当前文件：{{ form.file_path }} · 尺寸 {{ form.width }}×{{ form.height }}（留空文件框则不更换图片）</p>
+    {% endif %}
+
+    <label>图片文件 {% if form.is_new %}*{% endif %}(jpg / png / webp / gif，≤20MB)</label>
+    <input type="file" name="file" accept="image/*" {% if form.is_new %}required{% endif %}>
+
+    <label>标题 *</label>
+    <input type="text" name="title" value="{{ form.title }}" required>
+
+    <label>分类</label>
+    <select name="category_id">
+      <option value="0">未分类</option>
+      {% for c in categories %}
+      <option value="{{ c.id }}" {% if c.id == form.category_id %}selected{% endif %}>{{ c.name }}</option>
+      {% endfor %}
+    </select>
+
+    <label>AI 模型名称（如 FLUX.1-dev / SDXL / SD3.5）</label>
+    <input type="text" name="model_name" value="{{ form.model_name }}">
+
+    <label>价格（元）</label>
+    <input type="number" name="price" step="0.01" min="0" value="{{ form.price_yuan }}">
+
+    <label>描述</label>
+    <textarea name="description" rows="2">{{ form.description }}</textarea>
+
+    <label>ComfyUI 提示词（付费后展示给用户）</label>
+    <textarea name="prompt" rows="8">{{ form.prompt }}</textarea>
+
+    <label class="checkbox">
+      <input type="checkbox" name="is_published" value="1" {% if form.is_published %}checked{% endif %}>
+      立即上架
+    </label>
+
+    <button class="btn btn-primary" type="submit">保存</button>
+    <a class="btn" href="/admin/images">返回列表</a>
+  </form>
+</div>
+{% endblock %}

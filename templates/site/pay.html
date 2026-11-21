@@ -1,0 +1,50 @@
+{% extends "site/base.html" %}
+{% block title %}订单支付 - AI 图片画廊{% endblock %}
+{% block content %}
+<div class="pay-page">
+  {% if paid %}
+  <div class="pay-card">
+    <h1>✅ 支付成功</h1>
+    <p>订单号：{{ order_no }} · {{ amount_text }}</p>
+    <h3>《{{ title }}》的 ComfyUI 提示词</h3>
+    <pre class="prompt">{{ prompt }}</pre>
+    <a class="btn btn-primary" href="/images/{{ image_id }}">返回图片详情</a>
+  </div>
+  {% else %}
+  <div class="pay-card">
+    <h1>微信扫码支付</h1>
+    <p>商品：《{{ title }}》</p>
+    <p class="price big">{{ amount_text }}</p>
+    <p>订单号：{{ order_no }}</p>
+    <div class="qr" id="qr">{{ qr_svg|safe }}</div>
+    {% if mock %}
+    <p class="muted">当前为开发模式（未启用微信支付），可点击模拟支付完成流程。</p>
+    <form method="post" action="/pay/mock/{{ order_no }}">
+      <button class="btn btn-primary" type="submit">🧪 模拟支付成功</button>
+    </form>
+    {% else %}
+    <p class="muted">请使用微信扫码支付，支付成功后页面自动跳转。</p>
+    {% endif %}
+    <p id="status-msg" class="muted">等待支付中...</p>
+  </div>
+  {% endif %}
+</div>
+
+{% if !paid %}
+<script>
+  const orderNo = "{{ order_no }}";
+  const timer = setInterval(async () => {
+    try {
+      const resp = await fetch(`/api/order/${orderNo}/status`);
+      if (!resp.ok) return;
+      const data = await resp.json();
+      if (data.status === "paid") {
+        clearInterval(timer);
+        document.getElementById("status-msg").textContent = "支付成功，正在跳转...";
+        setTimeout(() => location.reload(), 800);
+      }
+    } catch (e) { /* 忽略网络抖动 */ }
+  }, 2000);
+</script>
+{% endif %}
+{% endblock %}

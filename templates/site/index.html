@@ -1,0 +1,36 @@
+{% extends "site/base.html" %}
+{% block title %}首页 - AI 图片画廊{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>精选 AI 生成图片</h1>
+  <p>由 ComfyUI 精心调制的 AI 作品，付费解锁提示词，复制即用。</p>
+</section>
+
+<div class="cat-nav">
+  {% for c in categories %}
+  <a class="chip" href="/images?category={{ c.id }}">{{ c.name }}</a>
+  {% endfor %}
+  <a class="chip" href="/images">全部</a>
+</div>
+
+<section>
+  <h2>最新作品</h2>
+  {% if cards.len() == 0 %}
+  <p class="empty">还没有作品，请先到后台上传。</p>
+  {% endif %}
+  <div class="grid">
+    {% for card in cards %}
+    <a class="card" href="/images/{{ card.id }}">
+      <img src="/{{ card.file_path }}" alt="{{ card.title }}" loading="lazy">
+      <div class="card-body">
+        <div class="card-title">{{ card.title }}</div>
+        <div class="card-meta">
+          <span>{{ card.category_name }}</span>
+          <span class="price">{{ card.price_text }}</span>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}图片管理 - 管理后台{% endblock %}
+{% block content %}
+<h1>图片管理</h1>
+<p><a class="btn btn-primary" href="/admin/images/new">⬆ 上传新图片</a></p>
+
+<div class="panel">
+  <table class="table">
+    <thead>
+      <tr><th>预览</th><th>标题</th><th>分类</th><th>模型</th><th>价格</th><th>状态</th><th>创建时间</th><th>操作</th></tr>
+    </thead>
+    <tbody>
+      {% for img in images %}
+      <tr>
+        <td><img class="thumb" src="/{{ img.thumb }}" alt="{{ img.title }}"></td>
+        <td>{{ img.title }}</td>
+        <td>{{ img.category_name }}</td>
+        <td>{{ img.model_name }}</td>
+        <td>{{ img.price_text }}</td>
+        <td>
+          {% if img.is_published %}
+          <span class="tag tag-ok">已上架</span>
+          {% else %}
+          <span class="tag tag-off">已下架</span>
+          {% endif %}
+        </td>
+        <td>{{ img.created_at }}</td>
+        <td class="actions">
+          <a class="btn btn-sm" href="/admin/images/{{ img.id }}/edit">编辑</a>
+          <form method="post" action="/admin/images/{{ img.id }}/toggle" class="inline">
+            <button class="btn btn-sm" type="submit">{% if img.is_published %}下架{% else %}上架{% endif %}</button>
+          </form>
+          <form method="post" action="/admin/images/{{ img.id }}/delete" class="inline" onsubmit="return confirm('删除后不可恢复，确定？')">
+            <button class="btn btn-sm btn-danger" type="submit">删除</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+      {% if images.len() == 0 %}
+      <tr><td colspan="8" class="empty">暂无图片</td></tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
